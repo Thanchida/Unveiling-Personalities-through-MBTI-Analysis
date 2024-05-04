@@ -1,7 +1,6 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 class StoryTelling:
@@ -29,9 +28,11 @@ class StoryTelling:
                                                          self.youtube_data['lowest_monthly_earnings']) / 2
 
     def first_story(self, event):
-        fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+        fig, axs = plt.subplots(1, 3, figsize=(10, 5))
+        palette = sns.color_palette("Reds")
+        plt.suptitle('Correlation between average earning & (subscribers, video views, uploaded videos)',
+                     fontsize=16, fontweight='bold', color=palette[5])
         sns.set_style('darkgrid')
-        palette = sns.color_palette("Spectral")
 
         # First subplot
         ax = sns.regplot(data=self.youtube_data, x='average_monthly_earnings', y='subscribers', ax=axs[0],
@@ -61,7 +62,7 @@ class StoryTelling:
 
         # Third subplot
         sns.regplot(data=self.youtube_data, x='average_monthly_earnings', y='uploads', ax=axs[2],
-                    scatter_kws={'color': palette[2]}, line_kws={'color': 'red'})
+                    scatter_kws={'color': palette[3]}, line_kws={'color': palette[5]})
         axs[2].set_ylim(0)
         axs[2].set_yticks(axs[2].get_yticks())
         axs[2].set_yticklabels([f'{label / 1e6}' for label in axs[2].get_yticks()])
@@ -90,10 +91,11 @@ class StoryTelling:
         year_trend['Year'] = year_trend['Year'].astype(int)
 
         # bar graph
-        fig, ax = plt.subplots(figsize=(15, 5))
+        palette = sns.color_palette("Reds")
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.set_title('The most created category for each year', fontsize=16, fontweight='bold', color=palette[5])
         sns.set_style('darkgrid')
-        sns.barplot(x='Year', y='total_created', hue='Category', data=year_trend, palette='magma')
-        # self.view.display_graph(fig, self.view.story_canvas)
+        sns.barplot(x='Year', y='total_created', hue='Category', data=year_trend, palette='Reds')
         self.controller.show_graph(fig)
 
     def third_story(self, event):
@@ -106,65 +108,115 @@ class StoryTelling:
             return df[(df >= lower_bound) & (df <= upper_bound)]
 
         # remove outliers for each channel type
+        palette = sns.color_palette("Reds")
         df_no_outliers = self.youtube_data.groupby('category')['average_monthly_earnings'].apply(remove_outliers).reset_index()
-        fig, axs = plt.subplots(1, 2, figsize=(13, 5))
+        fig, axs = plt.subplots(1, 2, figsize=(10, 5))
         sns.set_style('darkgrid')
 
         # First subplot (boxplot)
         ax = sns.boxplot(x='average_monthly_earnings', y='category', data=df_no_outliers,
-                         hue='category', palette='RdPu', ax=axs[0])
+                         hue='category', palette='Reds', ax=axs[0])
         ax.set_xlim(left=0)
         ax.set_xticks(ax.get_xticks())
         ax.set_xticklabels([f'{int(label / 1e6)}' for label in ax.get_xticks()])
         ax.set_xlabel('average_monthly_earning (million)')
-        ax.set_title('Boxplot')
+        ax.set_title('Average earning for each category', fontsize=16, fontweight='bold', color=palette[5])
 
         # Second subplot (histogram)
-        sns.histplot(df_no_outliers['average_monthly_earnings'], ax=axs[1], color='skyblue', kde=True)
+        sns.histplot(df_no_outliers['average_monthly_earnings'], ax=axs[1], color='red', kde=True)
         axs[1].set_xlabel('average_monthly_earnings')
         axs[1].set_ylabel('Frequency')
-        axs[1].set_title('Histogram')
+        axs[1].set_title('Histogram of Average of earning', fontsize=16, fontweight='bold', color=palette[5])
 
         plt.tight_layout()
-        # self.view.display_graph(fig, self.view.story_canvas)
         self.controller.show_graph(fig)
 
     def create_histogram(self, attribute):
         fig, ax = plt.subplots(figsize=(5, 4))
         to_create = self.youtube_data[attribute]
-        to_create.hist()
-        for num in ax.get_xticks():
-            if num > 1e6:
+        palette = sns.color_palette("Reds")
+        ax.set_title(f'Histogram of {attribute}', fontsize=16, fontweight='bold', color=palette[5])
+        sns.histplot(to_create, color='red', kde=True)
+        if max(ax.get_xticks()) > 1e6:
+            if max(ax.get_xticks()) > 1e7:
                 ax.set_xlim(left=0)
                 ax.set_xticks(ax.get_xticks())
-                ax.set_xticklabels(f'{int(num / 1e6)}' for num in ax.get_xticks())
-        ax.set_xlabel(f'{attribute} (million)')
-        ax.set_ylabel('Frequency')
-        ax.set_title(f'Histogram of {attribute}')
+                new_xtick_labels = [f'{int(label / 1e6)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'{attribute} (million)')
+            else:
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e5)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'{attribute} (hundred thousand)')
+        else:
+            ax.set_xlabel(f'{attribute}')
         self.controller.show_create_graph(fig)
 
     def create_scatter(self, attribute_1, attribute_2):
-        print(attribute_1, attribute_2)
         if attribute_1 is not None and attribute_2 is not None:
+            palette = sns.color_palette("Reds")
             fig, ax = plt.subplots(figsize=(6, 4))
+            ax.set_title(f'Correlation between {attribute_1} and {attribute_2}', fontsize=16, fontweight='bold',
+                         color=palette[5])
             sns.set_style('darkgrid')
             sns.regplot(data=self.youtube_data, x=attribute_1, y=attribute_2,
-                        line_kws={'color': 'red'}, ax=ax)
+                        scatter_kws={'color': palette[5]}, line_kws={'color': palette[1]})
 
             if max(ax.get_yticks()) > 1e6:
                 ax.set_ylim(0)
                 ax.set_yticks(ax.get_yticks())
                 new_ytick_labels = [f'{int(label / 1e6)}' for label in ax.get_yticks()]
                 ax.set_yticklabels(new_ytick_labels)
-                ax.set_ylabel(f'{attribute_1} (million)')
+                ax.set_ylabel(f'{attribute_2} (million)')
+            else:
+                ax.set_ylabel(f'{attribute_2}')
 
             if max(ax.get_xticks()) > 1e6:
                 ax.set_xlim(left=0)
                 ax.set_xticks(ax.get_xticks())
                 new_xtick_labels = [f'{int(label / 1e6)}' for label in ax.get_xticks()]
                 ax.set_xticklabels(new_xtick_labels)
-                ax.set_xlabel(f'{attribute_2} (million)')
+                ax.set_xlabel(f'{attribute_1} (million)')
+            else:
+                ax.set_xlabel(f'{attribute_1}')
 
             ax.set_title(f'Correlation between {attribute_1} and {attribute_2}')
             return self.controller.show_create_graph(fig)
 
+    def create_pie(self, year):
+        df_year = self.youtube_data[self.youtube_data['created_year'] == int(year)]
+        category_year = df_year['category'].value_counts().sort_values(ascending=True)
+
+        fig, ax = plt.subplots(figsize=(5, 4))
+        color = ['#c61a09', '#df2c14', '#ed3419', '#f01e2c', '#ff6242', '#ff8164', '#ffa590', '#ffc9bb',
+                 '#c30010', '#f94449', '#ee6b6e']
+        plt.pie(category_year.values, labels=category_year.index, autopct='%1.1f%%', startangle=140, colors=color)
+        plt.axis('equal')
+        plt.title('Category Pie Graph')
+        return self.controller.show_create_graph(fig)
+
+    def create_bar(self, attribute):
+        average_per_category = self.youtube_data.groupby('category')[attribute].mean()
+        average_per_category_df = pd.DataFrame(average_per_category)
+
+        fig, ax = plt.subplots(figsize=(10, 5))
+        sns.set_style('darkgrid')
+        sns.barplot(x=attribute, y='category', data=average_per_category_df, hue='category', palette='Reds')
+        if max(ax.get_xticks()) > 1e6:
+            if max(ax.get_xticks()) > 1e7:
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e6)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'{attribute} (million)')
+            else:
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e5)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'{attribute} (hundred thousand)')
+        else:
+            ax.set_xlabel(f'{attribute}')
+        return self.controller.show_create_graph(fig)

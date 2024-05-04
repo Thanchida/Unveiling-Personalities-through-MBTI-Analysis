@@ -13,6 +13,7 @@ class YouTubeController:
         self.bind_button()
 
     def bind_button(self):
+        self.view.home_button.bind('<Button-1>', lambda event: self.handle_menu(2))
         self.view.story_button.bind('<Button-1>', lambda event: self.handle_menu(1))
         self.view.create_button.bind('<Button-1>', lambda event: self.handle_menu(5))
 
@@ -29,16 +30,20 @@ class YouTubeController:
         self.view.select_hist_att.bind('<<ComboboxSelected>>', self.handle_create_hist)
         self.view.select_scatter_att_1.bind('<<ComboboxSelected>>', self.handle_create_scatter)
         self.view.select_scatter_att_2.bind('<<ComboboxSelected>>', self.handle_create_scatter)
+        self.view.select_pie_att.bind('<<ComboboxSelected>>', self.handle_create_pie)
+        self.view.select_bar_att.bind('<<ComboboxSelected>>', self.handle_create_bar)
 
     def handle_menu(self, num):
         if num == 1:
             self.view.story_canvas.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
             self.story_and_default()
+        elif num == 2:
+            self.view.show_home_page()
         elif num == 5:
             self.create_and_default(num)
 
     def story_and_default(self):
-        self.view.tree_frame.pack_forget()
+        self.view.table_frame.pack_forget()
         self.view.show_story_page()
         self.story.first_story(event=None)
 
@@ -57,15 +62,15 @@ class YouTubeController:
 
     def handle_story_page(self, num):
         if num == 1:
-            self.view.tree_frame.pack_forget()
+            self.view.table_frame.pack_forget()
             self.view.story_canvas.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
             self.show_first_graph()
         elif num == 2:
-            self.view.tree_frame.pack_forget()
+            self.view.table_frame.pack_forget()
             self.view.story_canvas.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
             self.show_second_graph()
         elif num == 3:
-            self.view.tree_frame.pack_forget()
+            self.view.table_frame.pack_forget()
             self.view.story_canvas.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
             self.show_third_graph()
         elif num == 4:
@@ -82,6 +87,14 @@ class YouTubeController:
         return self.story.youtube_data
 
     def handle_create_graph(self, num):
+        if num == 1:
+            self.story.create_histogram('subscribers')
+        elif num == 2:
+            self.story.create_scatter('subscribers', 'video views')
+        elif num == 3:
+            self.story.create_pie('2005')
+        elif num == 4:
+            self.story.create_bar('subscribers')
         self.view.show_create_graph_page(num, event=None)
 
     def handle_create_hist(self, event):
@@ -120,10 +133,24 @@ class YouTubeController:
     def handle_create_scatter(self, event):
         self.scatter_attribute_1 = self.handle_scatter_att_1()
         self.scatter_attribute_2 = self.handle_scatter_att_2()
-        # print(self.scatter_attribute_1, self.scatter_attribute_2)
         if (self.scatter_attribute_1 is not None and self.scatter_attribute_2 is not None
                 and self.view.select_scatter_att_1.get() and self.view.select_scatter_att_2.get()):
             self.story.create_scatter(self.scatter_attribute_1, self.scatter_attribute_2)
+
+    def handle_create_pie(self, event):
+        year = self.view.select_pie_att.get()
+        self.story.create_pie(year)
+
+    def handle_create_bar(self, event):
+        attribute = self.view.select_bar_att.get()
+        if attribute == 'Subscribers':
+            self.story.create_bar('subscribers')
+        elif attribute == 'Video views':
+            self.story.create_bar('video views')
+        elif attribute == 'Uploaded videos':
+            self.story.create_bar('uploads')
+        elif attribute == 'Average monthly earnings':
+            self.story.create_bar('average_monthly_earnings')
 
     def run(self):
         self.view.mainloop()
