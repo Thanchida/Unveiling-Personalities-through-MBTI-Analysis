@@ -26,3 +26,8 @@ like having a mentor who shows you the ropes of YouTube success.
     - bar_icon.png
     - pie_icon.png
     - scatter_icon.png
+
+## **Project Proposal**
+- [Proposal](https://docs.google.com/document/d/1UOE4kj8l7lmBmyUoykvETM2VaKEsLTY7KaX6PdkP_nc/edit?usp=sharing)
+
+
