@@ -7,7 +7,6 @@ class StoryTelling:
 
     def __init__(self, controller):
         self.youtube_data = pd.read_csv('Global YouTube Statistics.csv', encoding="latin-1")
-        # self.view = view
         self.controller = controller
         self.clean_data()
         self.find_average_earning()
@@ -201,7 +200,7 @@ class StoryTelling:
         average_per_category = self.youtube_data.groupby('category')[attribute].mean()
         average_per_category_df = pd.DataFrame(average_per_category)
 
-        fig, ax = plt.subplots(figsize=(10, 5))
+        fig, ax = plt.subplots(figsize=(10, 4))
         sns.set_style('darkgrid')
         sns.barplot(x=attribute, y='category', data=average_per_category_df, hue='category', palette='Reds')
         if max(ax.get_xticks()) > 1e6:
@@ -220,3 +219,45 @@ class StoryTelling:
         else:
             ax.set_xlabel(f'{attribute}')
         return self.controller.show_create_graph(fig)
+
+    def create_suggest_bar(self, category):
+        df = self.youtube_data[self.youtube_data['category'] == category]
+        top_10_sub = df.sort_values(by='subscribers', ascending=False).head(10)
+        top_10_view = df.sort_values(by='video views', ascending=False).head(10)
+        fig, axs = plt.subplots(1, 2, figsize=(13, 5))
+        sns.set_style('darkgrid')
+        sns.barplot(x='subscribers', y='Youtuber', data=top_10_sub[-1::-1], palette='Reds', ax=axs[0])
+        if max(axs[0].get_xticks()) > 1e6:
+            if max(axs[0].get_xticks()) > 1e7:
+                axs[0].set_xlim(left=0)
+                axs[0].set_xticks(axs[0].get_xticks())
+                new_xtick_labels = [f'{int(label / 1e6)}' for label in axs[0].get_xticks()]
+                axs[0].set_xticklabels(new_xtick_labels)
+                axs[0].set_xlabel(f'Subscribers (million)')
+            else:
+                axs[0].set_xlim(left=0)
+                axs[0].set_xticks(axs[0].get_xticks())
+                new_xtick_labels = [f'{int(label / 1e5)}' for label in axs[0].get_xticks()]
+                axs[0].set_xticklabels(new_xtick_labels)
+                axs[0].set_xlabel(f'Subscribers (hundred thousand)')
+        else:
+            axs[0].set_xlabel(f'Subscribers')
+
+        sns.barplot(x='video views', y='Youtuber', data=top_10_view[-1::-1], palette='Reds', ax=axs[1])
+        if max(axs[1].get_xticks()) > 1e6:
+            if max(axs[1].get_xticks()) > 1e7:
+                axs[1].set_xlim(left=0)
+                axs[1].set_xticks(axs[1].get_xticks())
+                new_xtick_labels = [f'{int(label / 1e6)}' for label in axs[1].get_xticks()]
+                axs[1].set_xticklabels(new_xtick_labels)
+                axs[1].set_xlabel(f'Subscribers (million)')
+            else:
+                axs[1].set_xlim(left=0)
+                axs[1].set_xticks(axs[1].get_xticks())
+                new_xtick_labels = [f'{int(label / 1e5)}' for label in axs[1].get_xticks()]
+                axs[1].set_xticklabels(new_xtick_labels)
+                axs[1].set_xlabel(f'Subscribers (hundred thousand)')
+        else:
+            axs[1].set_xlabel(f'Subscribers')
+        return self.controller.show_suggest_graph(fig)
+

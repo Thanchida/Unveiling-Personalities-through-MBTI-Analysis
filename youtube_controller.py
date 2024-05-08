@@ -16,6 +16,7 @@ class YouTubeController:
         self.view.home_button.bind('<Button-1>', lambda event: self.handle_menu(2))
         self.view.story_button.bind('<Button-1>', lambda event: self.handle_menu(1))
         self.view.create_button.bind('<Button-1>', lambda event: self.handle_menu(5))
+        self.view.suggest_button.bind('<Button-1>', lambda event: self.handle_menu(3))
 
         self.view.corr_button.bind('<Button-1>', lambda event: self.handle_story_page(1))
         self.view.year_trend_button.bind('<Button-1>', lambda event: self.handle_story_page(2))
@@ -33,12 +34,16 @@ class YouTubeController:
         self.view.select_pie_att.bind('<<ComboboxSelected>>', self.handle_create_pie)
         self.view.select_bar_att.bind('<<ComboboxSelected>>', self.handle_create_bar)
 
+        self.view.select_suggest_att.bind('<<ComboboxSelected>>', self.handle_suggest_graph)
+
     def handle_menu(self, num):
         if num == 1:
             self.view.story_canvas.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
             self.story_and_default()
         elif num == 2:
             self.view.show_home_page()
+        elif num == 3:
+            self.view.show_suggest_page()
         elif num == 5:
             self.create_and_default(num)
 
@@ -83,8 +88,15 @@ class YouTubeController:
     def show_create_graph(self, fig):
         self.view.display_graph(fig, self.view.create_graph_canvas)
 
+    def show_suggest_graph(self, fig):
+        self.view.display_graph(fig, self.view.suggest_canvas)
+
     def get_data(self):
         return self.story.youtube_data
+
+    def get_unique_category(self):
+        unique_category = list(self.story.youtube_data['category'].unique())
+        return unique_category
 
     def handle_create_graph(self, num):
         if num == 1:
@@ -151,6 +163,10 @@ class YouTubeController:
             self.story.create_bar('uploads')
         elif attribute == 'Average monthly earnings':
             self.story.create_bar('average_monthly_earnings')
+
+    def handle_suggest_graph(self, event):
+        category = self.view.select_suggest_att.get()
+        self.story.create_suggest_bar(category)
 
     def run(self):
         self.view.mainloop()

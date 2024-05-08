@@ -48,6 +48,7 @@ class YouTubeView(tk.Tk):
         self.show_home_page()
         self.create_story_page()
         self.create_menu_graph_page()
+        self.create_suggest_page()
 
     def create_home_page(self):
         self.home_frame = Frame(self.show_menu, bg='#f8f6f2', width=900)
@@ -233,7 +234,30 @@ class YouTubeView(tk.Tk):
         self.show_menu.pack(side=tk.LEFT, anchor='w', fill=tk.BOTH, expand=True)
 
     def create_suggest_page(self):
-        pass
+        self.suggest_frame = Frame(self.show_menu, bg='#f8f6f2')
+        self.suggest_label = tk.Label(self.suggest_frame, text="This menu will suggest a YouTube channel in a category "
+                                                               "you're"
+                                                               " interested in, \nso you can explore how those "
+                                                               "YouTubers "
+                                                               "engage their audience effectively.",
+                                      font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
+        self.suggest_label.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=20, pady=20)
+        self.suggest_select_frame = Frame(self.suggest_frame, bg='#f8f6f2')
+        self.suggest_select_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=20, pady=20)
+        self.select_suggest_label = tk.Label(self.suggest_select_frame, text='Select category',
+                                          font=('BM Jua', 22), fg='#f1e8d7', bg='#cd3c3c')
+        self.select_suggest_label.pack(side=tk.LEFT, anchor='w', padx=15, pady=15)
+        self.select_suggest_att = ttk.Combobox(self.suggest_select_frame, state='readonly', width=30)
+        unique_category = self.controller.get_unique_category()
+        self.select_suggest_att['values'] = unique_category
+        self.select_suggest_att.pack(side=tk.LEFT, anchor='w', padx=5)
+        self.suggest_canvas = tk.Canvas(self.suggest_frame, bg='red', width=400, height=400)
+        self.suggest_canvas.pack(side=tk.BOTTOM, anchor='w', fill=tk.BOTH, expand=True)
+
+    def show_suggest_page(self):
+        self.clear_menu()
+        self.suggest_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
+        self.show_menu.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
 
     def display_graph(self, fig, graph):
         # Clear any existing graph on the canvas
