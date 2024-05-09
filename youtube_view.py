@@ -142,7 +142,7 @@ class YouTubeView(tk.Tk):
                                           font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
         self.select_hist_label.pack(side=tk.LEFT, padx=15, pady=15)
         self.select_hist_att = ttk.Combobox(self.show_hist_frame, state='readonly', width=30)
-        self.select_hist_att['values'] = ['Subscribers', 'Video views', 'Uploaded videos', 'Average monthly earnings']
+        self.select_hist_att['values'] = ['Subscribers', 'Video views', 'Average monthly earnings']
         self.select_hist_att.pack(side=tk.LEFT, padx=5)
 
     def scatter_selected(self):
@@ -246,13 +246,25 @@ class YouTubeView(tk.Tk):
         self.suggest_select_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=20, pady=20)
         self.select_suggest_label = tk.Label(self.suggest_select_frame, text='Select category',
                                           font=('BM Jua', 22), fg='#f1e8d7', bg='#cd3c3c')
-        self.select_suggest_label.pack(side=tk.LEFT, anchor='w', padx=15, pady=15)
+        self.select_suggest_label.pack(side=tk.LEFT, anchor='w', padx=15)
         self.select_suggest_att = ttk.Combobox(self.suggest_select_frame, state='readonly', width=30)
         unique_category = self.controller.get_unique_category()
-        self.select_suggest_att['values'] = unique_category
+        self.select_suggest_att['values'] = [category for category in unique_category if category not in ['Education',
+                                                                                                          'Sports',
+                                                                                                    'People & Blogs',
+                                                                                                          'Shows',
+                                                                                                          'Other']]
         self.select_suggest_att.pack(side=tk.LEFT, anchor='w', padx=5)
+        self.select_suggest_from = Frame(self.suggest_frame, bg='#f8f6f2')
+        self.from_sub = tk.Button(self.select_suggest_from, text='Top 10 by Subscribers', font=('BM Jua', 22),
+                                  fg='#cd3c3c', width=25)
+        self.from_sub.pack(side=tk.LEFT, anchor='w', padx=15, fill=tk.X, expand=True)
+        self.from_view = tk.Button(self.select_suggest_from, text='Top 10 by Video views', font=('BM Jua', 22),
+                                   fg='#cd3c3c', width=25)
+        self.from_view.pack(side=tk.LEFT, anchor='w', padx=15, fill=tk.X, expand=True)
+        self.select_suggest_from.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=20)
         self.suggest_canvas = tk.Canvas(self.suggest_frame, bg='red', width=400, height=400)
-        self.suggest_canvas.pack(side=tk.BOTTOM, anchor='w', fill=tk.BOTH, expand=True)
+        self.suggest_canvas.pack(side=tk.BOTTOM, anchor='e', fill=tk.BOTH, expand=True)
 
     def show_suggest_page(self):
         self.clear_menu()
@@ -329,6 +341,7 @@ class YouTubeView(tk.Tk):
 
     def exit_app(self):
         self.destroy()
+        self.quit()
 
     def bind(self, sequence=None, func=None, add=None):
         for w in self.winfo_children():

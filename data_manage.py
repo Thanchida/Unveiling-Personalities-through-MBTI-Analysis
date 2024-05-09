@@ -1,6 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import re
 
 
 class StoryTelling:
@@ -21,6 +22,12 @@ class StoryTelling:
 
         # drop row that created_year is 1970 because YouTube is created in 2005
         self.youtube_data = self.youtube_data[self.youtube_data['created_year'] != 1970]
+
+        # Remove any characters that are not letters
+        to_re = r'[^a-zA-Z0-9\s.,!?&\'-]'
+        self.youtube_data['Youtuber'] = self.youtube_data['Youtuber'].apply(lambda x: re.sub(to_re, '', x))
+        self.youtube_data['Youtuber'] = self.youtube_data['Youtuber'].str.strip()
+        self.youtube_data['Youtuber'] = self.youtube_data['Youtuber'].str.lstrip('- ')
 
     def find_average_earning(self):
         self.youtube_data['average_monthly_earnings'] = (self.youtube_data['highest_monthly_earnings'] +
@@ -189,18 +196,23 @@ class StoryTelling:
         category_year = df_year['category'].value_counts().sort_values(ascending=True)
 
         fig, ax = plt.subplots(figsize=(5, 4))
+        palette = sns.color_palette("Reds")
+        ax.set_title(f'Category created in the year {year}', fontsize=16, fontweight='bold',
+                     color=palette[5])
         color = ['#c61a09', '#df2c14', '#ed3419', '#f01e2c', '#ff6242', '#ff8164', '#ffa590', '#ffc9bb',
                  '#c30010', '#f94449', '#ee6b6e']
         plt.pie(category_year.values, labels=category_year.index, autopct='%1.1f%%', startangle=140, colors=color)
         plt.axis('equal')
-        plt.title('Category Pie Graph')
         return self.controller.show_create_graph(fig)
 
     def create_bar(self, attribute):
         average_per_category = self.youtube_data.groupby('category')[attribute].mean()
         average_per_category_df = pd.DataFrame(average_per_category)
 
-        fig, ax = plt.subplots(figsize=(10, 4))
+        palette = sns.color_palette("Reds")
+        fig, ax = plt.subplots(figsize=(6, 4))
+        ax.set_title(f'Average of {attribute} for each category', fontsize=16, fontweight='bold',
+                     color=palette[5])
         sns.set_style('darkgrid')
         sns.barplot(x=attribute, y='category', data=average_per_category_df, hue='category', palette='Reds')
         if max(ax.get_xticks()) > 1e6:
@@ -220,44 +232,57 @@ class StoryTelling:
             ax.set_xlabel(f'{attribute}')
         return self.controller.show_create_graph(fig)
 
-    def create_suggest_bar(self, category):
+    def create_suggest_bar_sub(self, category):
         df = self.youtube_data[self.youtube_data['category'] == category]
         top_10_sub = df.sort_values(by='subscribers', ascending=False).head(10)
-        top_10_view = df.sort_values(by='video views', ascending=False).head(10)
-        fig, axs = plt.subplots(1, 2, figsize=(13, 5))
+        fig, ax = plt.subplots(figsize=(6, 5))
         sns.set_style('darkgrid')
-        sns.barplot(x='subscribers', y='Youtuber', data=top_10_sub[-1::-1], palette='Reds', ax=axs[0])
-        if max(axs[0].get_xticks()) > 1e6:
-            if max(axs[0].get_xticks()) > 1e7:
-                axs[0].set_xlim(left=0)
-                axs[0].set_xticks(axs[0].get_xticks())
-                new_xtick_labels = [f'{int(label / 1e6)}' for label in axs[0].get_xticks()]
-                axs[0].set_xticklabels(new_xtick_labels)
-                axs[0].set_xlabel(f'Subscribers (million)')
+        ax.tick_params(axis='y', rotation=30)
+        palette = sns.color_palette("Reds")
+        ax.set_title(f'Top 10 by subscribers for {category}', fontsize=16, fontweight='bold',
+                     color=palette[5])
+        sns.barplot(x='subscribers', y='Youtuber', data=top_10_sub[-1::-1], hue='Youtuber', palette='Reds', ax=ax)
+        if max(ax.get_xticks()) > 1e6:
+            if max(ax.get_xticks()) > 1e7:
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e6)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'Subscribers (million)')
             else:
-                axs[0].set_xlim(left=0)
-                axs[0].set_xticks(axs[0].get_xticks())
-                new_xtick_labels = [f'{int(label / 1e5)}' for label in axs[0].get_xticks()]
-                axs[0].set_xticklabels(new_xtick_labels)
-                axs[0].set_xlabel(f'Subscribers (hundred thousand)')
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e5)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'Subscribers (hundred thousand)')
         else:
-            axs[0].set_xlabel(f'Subscribers')
+            ax.set_xlabel(f'Subscribers')
+        return self.controller.show_suggest_graph(fig)
 
-        sns.barplot(x='video views', y='Youtuber', data=top_10_view[-1::-1], palette='Reds', ax=axs[1])
-        if max(axs[1].get_xticks()) > 1e6:
-            if max(axs[1].get_xticks()) > 1e7:
-                axs[1].set_xlim(left=0)
-                axs[1].set_xticks(axs[1].get_xticks())
-                new_xtick_labels = [f'{int(label / 1e6)}' for label in axs[1].get_xticks()]
-                axs[1].set_xticklabels(new_xtick_labels)
-                axs[1].set_xlabel(f'Subscribers (million)')
+    def create_suggest_bar_view(self, category):
+        df = self.youtube_data[self.youtube_data['category'] == category]
+        top_10_view = df.sort_values(by='video views', ascending=False).head(10)
+        fig, ax = plt.subplots(figsize=(6, 5))
+        sns.set_style('darkgrid')
+        ax.tick_params(axis='y', rotation=30)
+        palette = sns.color_palette("Reds")
+        ax.set_title(f'Top 10 by video views for {category}', fontsize=16, fontweight='bold',
+                     color=palette[5])
+        sns.barplot(x='video views', y='Youtuber', data=top_10_view[-1::-1], hue='Youtuber', palette='Reds', ax=ax)
+        if max(ax.get_xticks()) > 1e6:
+            if max(ax.get_xticks()) > 1e7:
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e6)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'Video views (million)')
             else:
-                axs[1].set_xlim(left=0)
-                axs[1].set_xticks(axs[1].get_xticks())
-                new_xtick_labels = [f'{int(label / 1e5)}' for label in axs[1].get_xticks()]
-                axs[1].set_xticklabels(new_xtick_labels)
-                axs[1].set_xlabel(f'Subscribers (hundred thousand)')
+                ax.set_xlim(left=0)
+                ax.set_xticks(ax.get_xticks())
+                new_xtick_labels = [f'{int(label / 1e5)}' for label in ax.get_xticks()]
+                ax.set_xticklabels(new_xtick_labels)
+                ax.set_xlabel(f'Video views (hundred thousand)')
         else:
-            axs[1].set_xlabel(f'Subscribers')
+            ax.set_xlabel(f'Video views')
         return self.controller.show_suggest_graph(fig)
 

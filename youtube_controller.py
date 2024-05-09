@@ -35,6 +35,8 @@ class YouTubeController:
         self.view.select_bar_att.bind('<<ComboboxSelected>>', self.handle_create_bar)
 
         self.view.select_suggest_att.bind('<<ComboboxSelected>>', self.handle_suggest_graph)
+        self.view.from_sub.bind('<Button-1>', lambda event: self.handle_suggest_graph(1))
+        self.view.from_view.bind('<Button-1>', lambda event: self.handle_suggest_graph(2))
 
     def handle_menu(self, num):
         if num == 1:
@@ -43,7 +45,7 @@ class YouTubeController:
         elif num == 2:
             self.view.show_home_page()
         elif num == 3:
-            self.view.show_suggest_page()
+            self.suggest_and_default()
         elif num == 5:
             self.create_and_default(num)
 
@@ -55,6 +57,10 @@ class YouTubeController:
     def create_and_default(self, num):
         self.story.create_histogram('subscribers')
         self.view.show_create_graph_page(num, event=None)
+
+    def suggest_and_default(self):
+        self.story.create_suggest_bar_sub('Music')
+        self.view.show_suggest_page()
 
     def show_first_graph(self):
         self.story.first_story(event=None)
@@ -115,8 +121,6 @@ class YouTubeController:
             self.story.create_histogram('subscribers')
         elif attribute == 'Video views':
             self.story.create_histogram('video views')
-        elif attribute == 'Uploaded videos':
-            self.story.create_histogram('uploads')
         elif attribute == 'Average monthly earnings':
             self.story.create_histogram('average_monthly_earnings')
 
@@ -164,9 +168,12 @@ class YouTubeController:
         elif attribute == 'Average monthly earnings':
             self.story.create_bar('average_monthly_earnings')
 
-    def handle_suggest_graph(self, event):
+    def handle_suggest_graph(self, num):
         category = self.view.select_suggest_att.get()
-        self.story.create_suggest_bar(category)
+        if category is not None and num == 1:
+            self.story.create_suggest_bar_sub(category)
+        if category is not None and num == 2:
+            self.story.create_suggest_bar_view(category)
 
     def run(self):
         self.view.mainloop()
