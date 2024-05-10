@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, Frame
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
@@ -394,6 +395,8 @@ class YouTubeView(tk.Tk):
         self.canvas = FigureCanvasTkAgg(fig, master=graph)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+        plt.close(fig)
 
     def clear_menu(self):
         """
