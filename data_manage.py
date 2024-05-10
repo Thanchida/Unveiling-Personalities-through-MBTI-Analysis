@@ -42,10 +42,8 @@ class StoryTelling:
         self.youtube_data = self.youtube_data[self.youtube_data['created_year'] != 1970]
 
         # Remove any characters that are not letters
-        to_re = r'[^a-zA-Z0-9\s.,!?&\'-]'
+        to_re = r'[^a-zA-Z]'
         self.youtube_data['Youtuber'] = self.youtube_data['Youtuber'].apply(lambda x: re.sub(to_re, '', x))
-        self.youtube_data['Youtuber'] = self.youtube_data['Youtuber'].str.strip()
-        self.youtube_data['Youtuber'] = self.youtube_data['Youtuber'].str.lstrip('- ')
 
     def find_average_earning(self):
         """
