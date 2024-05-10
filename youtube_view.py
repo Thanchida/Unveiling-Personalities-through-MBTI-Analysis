@@ -249,11 +249,9 @@ class YouTubeView(tk.Tk):
         self.select_suggest_label.pack(side=tk.LEFT, anchor='w', padx=15)
         self.select_suggest_att = ttk.Combobox(self.suggest_select_frame, state='readonly', width=30)
         unique_category = self.controller.get_unique_category()
-        self.select_suggest_att['values'] = [category for category in unique_category if category not in ['Education',
-                                                                                                          'Sports',
-                                                                                                    'People & Blogs',
-                                                                                                          'Shows',
-                                                                                                          'Other']]
+        not_use = ['Education', 'Sports', 'People & Blogs', 'Shows', 'Other', 'Movies', 'Pets & Animals',
+                   'Autos & Vehicles', 'Travel & Events', 'Nonprofits & Activism', 'Trailers']
+        self.select_suggest_att['values'] = [category for category in unique_category if category not in not_use]
         self.select_suggest_att.pack(side=tk.LEFT, anchor='w', padx=5)
         self.select_suggest_from = Frame(self.suggest_frame, bg='#f8f6f2')
         self.from_sub = tk.Button(self.select_suggest_from, text='Top 10 by Subscribers', font=('BM Jua', 22),
