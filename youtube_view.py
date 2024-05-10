@@ -1,11 +1,17 @@
 import tkinter as tk
-from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, Frame
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class YouTubeView(tk.Tk):
+    """
+    Represent a main window of 'YouTube Trend Analysis' application.
+    """
     def __init__(self, controller):
+        """
+        Initialize a YouTubeView object.
+        :param controller: The controller object for managing the GUI.
+        """
         super().__init__()
         self.title('YouTube Trend Analysis')
         self.configure(bg='#f8f6f2')
@@ -16,7 +22,12 @@ class YouTubeView(tk.Tk):
         self.init_component()
 
     def init_component(self):
-        # Create top frame and menu
+        """
+        Set up the main component of 'YouTube Trend Analysis' application
+        and also create component of the home page,
+        story page, menu graph page, and suggest page .
+        :return: None
+        """
         self.top_frame = Frame(self, bg='#f8f6f2', height=130, highlightbackground='#cd3c3c',
                                highlightthickness=4)
         self.top_frame.pack(side=tk.TOP, fill=tk.X)
@@ -52,6 +63,10 @@ class YouTubeView(tk.Tk):
         self.create_suggest_page()
 
     def create_home_page(self):
+        """
+        Set up components of home menu.
+        :return: None
+        """
         self.home_frame = Frame(self.show_menu, bg='#f8f6f2',
                                 width=900)
         self.welcome_label = tk.Label(self.home_frame, text="Welcome to YouTube Trend Analysis!\n "
@@ -66,11 +81,19 @@ class YouTubeView(tk.Tk):
         self.home_label.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=20, pady=20)
 
     def show_home_page(self):
+        """
+        Display home menu.
+        :return: None
+        """
         self.clear_menu()
         self.home_frame.pack(side=tk.TOP, fill=tk.X, expand=True)
         self.show_menu.pack(side=tk.TOP, anchor='w', fill=tk.X, expand=True)
 
     def create_story_page(self):
+        """
+        Set up components of 'story telling' menu.
+        :return: None
+        """
         self.story_frame = Frame(self.show_menu, bg='#f8f6f2', width=900)
         self.story_menu_frame = Frame(self.story_frame, bg='#cd3c3c', height=80)
         self.story_menu_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
@@ -100,11 +123,20 @@ class YouTubeView(tk.Tk):
         self.descriptive_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=52, pady=5)
 
     def show_story_page(self):
+        """
+        Display story telling menu.
+        :return: None
+        """
         self.clear_menu()
         self.story_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
         self.show_menu.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
 
     def create_menu_graph_page(self):
+        """
+        Set up components of 'create graph' menu and also set up components for selecting
+        different types of graphs such as histogram, scatter graph, pie chart, and bar graph
+        :return: None
+        """
         self.select_type_frame = Frame(self.show_menu, bg='#f8f6f2')
         self.select_first_row = Frame(self.select_type_frame, bg='#f8f6f2')
         self.select_first_row.pack(side=tk.TOP, fill=tk.X, expand=True, padx=0)
@@ -152,6 +184,10 @@ class YouTubeView(tk.Tk):
         self.pie_selected()
 
     def hist_selected(self):
+        """
+        Set up components for selecting a histogram.
+        :return: None
+        """
         self.show_hist_frame = Frame(self.select_type_frame, bg='#f8f6f2')
         self.select_hist_label = tk.Label(self.show_hist_frame,
                                           text='Select attribute to see histogram',
@@ -162,6 +198,10 @@ class YouTubeView(tk.Tk):
         self.select_hist_att.pack(side=tk.LEFT, padx=5)
 
     def scatter_selected(self):
+        """
+        Set up components for selecting a scatter plot.
+        :return: None
+        """
         self.show_scatter_frame = Frame(self.select_type_frame, bg='#f8f6f2')
         self.select_scatter_label = tk.Label(self.show_scatter_frame,
                                              text='Select attribute to see scatter graph',
@@ -179,6 +219,10 @@ class YouTubeView(tk.Tk):
         self.select_scatter_att_2.pack(side=tk.LEFT, padx=5)
 
     def pie_selected(self):
+        """
+        Set up components for selecting a pie chart.
+        :return: None
+        """
         self.show_pie_frame = Frame(self.select_type_frame, bg='#f8f6f2')
         self.select_pie_label = tk.Label(self.show_pie_frame, text='Category created in the year',
                                          font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
@@ -191,6 +235,10 @@ class YouTubeView(tk.Tk):
         self.select_pie_att.pack(side=tk.LEFT, padx=5)
 
     def bar_selected(self):
+        """
+        Set up components for selecting a bar graph.
+        :return: None
+        """
         self.show_bar_frame = Frame(self.select_type_frame, bg='#f8f6f2')
         self.select_bar_label = tk.Label(self.show_bar_frame, text='See average of',
                                           font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
@@ -204,6 +252,12 @@ class YouTubeView(tk.Tk):
         self.select_bar_label_2.pack(side=tk.LEFT, padx=5)
 
     def show_create_graph_page(self, num, event):
+        """
+        Displays the menu based on the user-selected option. It clears any previous menu
+        components, sets up the new menu components based on the selected option.
+        :param num: The number representing the menu selection.
+        :return: None
+        """
         self.clear_menu()
         self.clear_previous()
         self.select_type_frame.pack(side=tk.TOP, anchor='w', fill=tk.X, expand=True)
@@ -226,6 +280,10 @@ class YouTubeView(tk.Tk):
             self.check_menu = 'bar'
 
     def clear_previous(self):
+        """
+        Clears any previous menu components.
+        :return: None
+        """
         if self.check_menu == 'histogram':
             self.show_hist_frame.pack_forget()
         elif self.check_menu == 'scatter':
@@ -236,26 +294,46 @@ class YouTubeView(tk.Tk):
             self.show_bar_frame.pack_forget()
 
     def show_create_hist(self):
+        """
+        Displays the components for creating a histogram.
+        :return: None
+        """
         self.select_type_frame.pack(side=tk.TOP, anchor='w', fill=tk.X, expand=True)
         self.show_hist_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
         self.show_menu.pack(side=tk.LEFT, anchor='w', fill=tk.BOTH, expand=True)
 
     def show_create_scatter(self):
+        """
+        Displays the components for creating a scatter graph.
+        :return: None
+        """
         self.select_type_frame.pack(side=tk.TOP, anchor='w', fill=tk.X, expand=True)
         self.show_scatter_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
         self.show_menu.pack(side=tk.LEFT, anchor='w', fill=tk.BOTH, expand=True)
 
     def show_create_pie(self):
+        """
+        Displays the components for creating a pie chart.
+        :return: None
+        """
         self.select_type_frame.pack(side=tk.TOP, anchor='w', fill=tk.X, expand=True)
         self.show_pie_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
         self.show_menu.pack(side=tk.LEFT, anchor='w', fill=tk.BOTH, expand=True)
 
     def show_create_bar(self):
+        """
+        Displays the components for creating a bar graph.
+        :return: None
+        """
         self.select_type_frame.pack(side=tk.TOP, anchor='w', fill=tk.X, expand=True)
         self.show_bar_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
         self.show_menu.pack(side=tk.LEFT, anchor='w', fill=tk.BOTH, expand=True)
 
     def create_suggest_page(self):
+        """
+        Set up components for 'suggest channel' menu.
+        :return: None
+        """
         self.suggest_frame = Frame(self.show_menu, bg='#f8f6f2')
         self.suggest_label = tk.Label(self.suggest_frame, text="This menu will suggest a YouTube"
                                                                " channel in a category "
@@ -295,29 +373,41 @@ class YouTubeView(tk.Tk):
         self.suggest_canvas.pack(side=tk.BOTTOM, anchor='e', fill=tk.BOTH, expand=True)
 
     def show_suggest_page(self):
+        """
+        Display suggest channel menu.
+        :return: None
+        """
         self.clear_menu()
         self.suggest_frame.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
         self.show_menu.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
 
     def display_graph(self, fig, graph):
-        # Clear any existing graph on the canvas
+        """
+        Display the graph on the canvas.
+        :param fig: The matplotlib figure object.
+        :param graph: The canvas that will display graph.
+        :return: None
+        """
         if self.canvas:
             self.canvas.get_tk_widget().destroy()
 
-        # Embed the figure in the canvas
         self.canvas = FigureCanvasTkAgg(fig, master=graph)
-
-        # Draw the canvas
         self.canvas.draw()
-
-        # Pack the canvas onto the frame
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
     def clear_menu(self):
+        """
+        Clear all widget from the menu frame.
+        :return: None
+        """
         for w in self.show_menu.winfo_children():
             w.pack_forget()
 
     def create_table(self):
+        """
+        Create table to display descriptive and statistic of data.
+        :return: None
+        """
         df = self.controller.get_data()
         df_to_describe = df[['subscribers', 'video views', 'uploads', 'average_monthly_earnings']]
         summary_stats = df_to_describe.describe(percentiles=[.25, .50, .75])
@@ -375,12 +465,27 @@ class YouTubeView(tk.Tk):
             label_max.grid(row=i + 1, column=4)
 
     def show_table(self):
+        """
+        Display descriptive and statistic table.
+        :return: None
+        """
         self.table_frame.pack(pady=25)
 
     def exit_app(self):
+        """
+        Exit application.
+        :return: None
+        """
         self.destroy()
         self.quit()
 
     def bind(self, sequence=None, func=None, add=None):
+        """
+        Bind function to an event for all children widgets.
+        :param sequence: A string representing the event sequence.
+        :param func: The function to bind to the event.
+        :param add: Optional parameter.
+        :return: None
+        """
         for w in self.winfo_children():
             w.bind(sequence, func)
