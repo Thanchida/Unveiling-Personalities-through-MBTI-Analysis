@@ -53,6 +53,72 @@ class StoryTelling:
         self.youtube_data['average_monthly_earnings'] = (self.youtube_data['highest_monthly_earnings'] +
                                                          self.youtube_data['lowest_monthly_earnings']) / 2
 
+    def default_story_graph(self):
+        """
+        Create default graph of 'story telling' menu
+            - Scatter plot
+            - Bar graph
+            - Box plot
+            - Histogram
+        :return: None
+        """
+        year = self.youtube_data['created_year'].unique()
+        year = sorted(year)
+
+        result = []
+        for i, y in enumerate(year):
+            group_year = self.youtube_data[self.youtube_data['created_year'] == y]
+            category_counts = group_year['category'].value_counts()
+            max_category = category_counts.idxmax()
+            max_category_value = category_counts.values.max()
+            m = {'Year': y, 'Category': max_category, 'total_created': max_category_value}
+            result.append(m)
+        year_trend = pd.DataFrame(result)
+        year_trend['Year'] = year_trend['Year'].astype(int)
+
+        def remove_outliers(df):
+            q1 = df.quantile(0.25)
+            q3 = df.quantile(0.75)
+            iqr = q3 - q1
+            lower_bound = q1 - 1.5 * iqr
+            upper_bound = q3 + 1.5 * iqr
+            return df[(df >= lower_bound) & (df <= upper_bound)]
+
+        df_no_outliers = self.youtube_data.groupby('category')['average_monthly_earnings'].apply(remove_outliers).reset_index()
+        fig, axs = plt.subplots(2, 2, figsize=(10, 6))
+        plt.subplots_adjust(hspace=0.4)
+        palette = sns.color_palette("Reds")
+        sns.regplot(data=self.youtube_data, x='average_monthly_earnings', y='subscribers',
+                    ax=axs[0, 0], scatter_kws={'color': palette[5]},
+                    line_kws={'color': palette[1]})
+        axs[0, 0].set_ylim(0)
+        axs[0, 0].set_yticks(axs[0, 0].get_yticks())
+        axs[0, 0].set_yticklabels([f'{label / 1e6}' for label in axs[0, 0].get_yticks()])
+        axs[0, 0].set_ylabel('subscribers (million)')
+
+        axs[0, 0].set_xlim(left=0)
+        axs[0, 0].set_xticks(axs[0, 0].get_xticks())
+        axs[0, 0].set_xticklabels([f'{label / 1e6}' for label in axs[0, 0].get_xticks()])
+        axs[0, 0].set_xlabel('average_monthly_earning (million)')
+        axs[0, 0].set_title('Correlation between Subscribers & average earning',
+                            fontweight='bold', color=palette[5])
+
+        sns.barplot(x='Year', y='total_created', hue='Category',
+                    data=year_trend[6:], palette='Reds', ax=axs[0, 1])
+        axs[0, 1].set_title('The most created category for each year',
+                            fontweight='bold', color=palette[5])
+
+        sns.boxplot(x='average_monthly_earnings', y='category', data=df_no_outliers,
+                    hue='category', palette='Reds', ax=axs[1, 0])
+        axs[1, 0].set_title('Average earning for each category',
+                            fontweight='bold', color=palette[5])
+
+        sns.histplot(df_no_outliers['average_monthly_earnings'], ax=axs[1, 1],
+                     color='red', kde=True)
+        axs[1, 1].set_title('Histogram of Average of earning',
+                            fontweight='bold', color=palette[5])
+        self.controller.show_graph(fig)
+
     def first_story(self, event):
         """
         Create scatter plot to tell correlation between attributes
