@@ -17,7 +17,8 @@ class YouTubeView(tk.Tk):
 
     def init_component(self):
         # Create top frame and menu
-        self.top_frame = Frame(self, bg='#f8f6f2', height=130, highlightbackground='#cd3c3c', highlightthickness=4)
+        self.top_frame = Frame(self, bg='#f8f6f2', height=130, highlightbackground='#cd3c3c',
+                               highlightthickness=4)
         self.top_frame.pack(side=tk.TOP, fill=tk.X)
         self.menu_page = Frame(self, bg='#f1e8d7')
         self.menu_page.pack(side=tk.LEFT, anchor='w', fill=tk.Y)
@@ -51,9 +52,12 @@ class YouTubeView(tk.Tk):
         self.create_suggest_page()
 
     def create_home_page(self):
-        self.home_frame = Frame(self.show_menu, bg='#f8f6f2', width=900)
-        self.welcome_label = tk.Label(self.home_frame, text="Welcome to YouTube Trend Analysis!\n This app is for "
-                                                            "people who want to create their own channels. Let's "
+        self.home_frame = Frame(self.show_menu, bg='#f8f6f2',
+                                width=900)
+        self.welcome_label = tk.Label(self.home_frame, text="Welcome to YouTube Trend Analysis!\n "
+                                                            "This app is for "
+                                                            "people who want to create their own "
+                                                            "channels. Let's "
                                                             "explore!",
                                       font=('BM Jua', 25), bg='#f1e8d7', fg='#cd3c3c', height=5)
         self.welcome_label.pack(side=tk.TOP, padx=30, pady=30, fill=tk.X, expand=True)
@@ -75,17 +79,23 @@ class YouTubeView(tk.Tk):
         self.table_frame = Frame(self.show_graph_frame, width=650, height=680)
         self.create_table()
         self.story_canvas = tk.Canvas(self.show_graph_frame, bg='red', width=400, height=400)
-        self.story_canvas.pack(side=tk.TOP, anchor='w', fill=tk.BOTH, expand=True)
+        self.story_canvas.pack(side=tk.TOP, anchor='w',
+                               fill=tk.BOTH, expand=True)
         self.corr_button = tk.Button(self.story_menu_frame, text='Correlation', width=15, height=1,
-                                     font=('BM Jua', 20), bd=0, fg='#cd3c3c')
+                                     font=('BM Jua', 20),
+                                     bd=0, fg='#cd3c3c')
         self.corr_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=52, pady=5)
-        self.year_trend_button = tk.Button(self.story_menu_frame, text='Year Trend', width=15, height=1,
+        self.year_trend_button = tk.Button(self.story_menu_frame, text='Year Trend',
+                                           width=15, height=1,
                                            font=('BM Jua', 20), bd=0, fg='#cd3c3c')
         self.year_trend_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=52, pady=5)
-        self.avg_earning_button = tk.Button(self.story_menu_frame, text='Average Earning', width=15, height=1,
+        self.avg_earning_button = tk.Button(self.story_menu_frame, text='Average Earning',
+                                            width=15, height=1,
                                             font=('BM Jua', 20), bd=0, fg='#cd3c3c')
-        self.avg_earning_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=52, pady=5)
-        self.descriptive_button = tk.Button(self.story_menu_frame, text='Descriptive', width=15, height=1,
+        self.avg_earning_button.pack(side=tk.LEFT, fill=tk.X,
+                                     expand=True, padx=52, pady=5)
+        self.descriptive_button = tk.Button(self.story_menu_frame, text='Descriptive',
+                                            width=15, height=1,
                                             font=('BM Jua', 20), bd=0, fg='#cd3c3c')
         self.descriptive_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=52, pady=5)
 
@@ -100,34 +110,39 @@ class YouTubeView(tk.Tk):
         self.select_first_row.pack(side=tk.TOP, fill=tk.X, expand=True, padx=0)
         self.select_second_row = Frame(self.select_type_frame, bg='#f8f6f2')
         self.select_second_row.pack(side=tk.TOP, fill=tk.X, expand=True, padx=0)
-        self.create_graph_canvas = tk.Canvas(self.select_type_frame, bg='red', width=400, height=400)
+        self.create_graph_canvas = tk.Canvas(self.select_type_frame, bg='red',
+                                             width=400, height=400)
         self.create_graph_canvas.pack(side=tk.BOTTOM, anchor='w', fill=tk.BOTH, expand=True)
 
         self.hist_icon = tk.PhotoImage(file='histogram_icon.png')
         self.hist_button = tk.Button(self.select_first_row, image=self.hist_icon)
         self.hist_button.pack(side=tk.LEFT, expand=True)
-        self.hist_label = tk.Label(self.select_first_row, text='Histogram', bg='#cd3c3c', fg='#f8f6f2',
+        self.hist_label = tk.Label(self.select_first_row, text='Histogram',
+                                   bg='#cd3c3c', fg='#f8f6f2',
                                    font=('BM Jua', 22), width=30, height=2)
         self.hist_label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=30)
 
         self.scatter_icon = tk.PhotoImage(file='scatter_icon.png')
         self.scatter_button = tk.Button(self.select_first_row, image=self.scatter_icon)
         self.scatter_button.pack(side=tk.LEFT, expand=True)
-        self.scatter_label = tk.Label(self.select_first_row, text='Scatter Graph', bg='#cd3c3c', fg='#f8f6f2',
+        self.scatter_label = tk.Label(self.select_first_row, text='Scatter Graph',
+                                      bg='#cd3c3c', fg='#f8f6f2',
                                       font=('BM Jua', 22), width=30, height=2)
         self.scatter_label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=30)
 
         self.pie_icon = tk.PhotoImage(file='pie_icon.png')
         self.pie_button = tk.Button(self.select_second_row, image=self.pie_icon)
         self.pie_button.pack(side=tk.LEFT, expand=True)
-        self.pie_label = tk.Label(self.select_second_row, text='Pie Chart', bg='#cd3c3c', fg='#f8f6f2',
+        self.pie_label = tk.Label(self.select_second_row, text='Pie Chart',
+                                  bg='#cd3c3c', fg='#f8f6f2',
                                   font=('BM Jua', 22), width=30, height=2)
         self.pie_label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=30)
 
         self.bar_icon = tk.PhotoImage(file='bar_icon.png')
         self.bar_button = tk.Button(self.select_second_row, image=self.bar_icon)
         self.bar_button.pack(side=tk.LEFT, expand=True)
-        self.bar_label = tk.Label(self.select_second_row, text='Bar Graph', bg='#cd3c3c', fg='#f8f6f2',
+        self.bar_label = tk.Label(self.select_second_row, text='Bar Graph',
+                                  bg='#cd3c3c', fg='#f8f6f2',
                                   font=('BM Jua', 22), width=30, height=2)
         self.bar_label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=30)
 
@@ -138,7 +153,8 @@ class YouTubeView(tk.Tk):
 
     def hist_selected(self):
         self.show_hist_frame = Frame(self.select_type_frame, bg='#f8f6f2')
-        self.select_hist_label = tk.Label(self.show_hist_frame, text='Select attribute to see histogram',
+        self.select_hist_label = tk.Label(self.show_hist_frame,
+                                          text='Select attribute to see histogram',
                                           font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
         self.select_hist_label.pack(side=tk.LEFT, padx=15, pady=15)
         self.select_hist_att = ttk.Combobox(self.show_hist_frame, state='readonly', width=30)
@@ -147,14 +163,17 @@ class YouTubeView(tk.Tk):
 
     def scatter_selected(self):
         self.show_scatter_frame = Frame(self.select_type_frame, bg='#f8f6f2')
-        self.select_scatter_label = tk.Label(self.show_scatter_frame, text='Select attribute to see scatter graph',
+        self.select_scatter_label = tk.Label(self.show_scatter_frame,
+                                             text='Select attribute to see scatter graph',
                                              font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
         self.select_scatter_label.pack(side=tk.LEFT, padx=15, pady=15)
-        self.select_scatter_att_1 = ttk.Combobox(self.show_scatter_frame, width=20, state='readonly')
+        self.select_scatter_att_1 = ttk.Combobox(self.show_scatter_frame,
+                                                 width=20, state='readonly')
         self.select_scatter_att_1['values'] = ['Subscribers', 'Video views', 'Uploaded videos',
                                                'Average monthly earnings']
         self.select_scatter_att_1.pack(side=tk.LEFT, padx=5)
-        self.select_scatter_att_2 = ttk.Combobox(self.show_scatter_frame, width=20, state='readonly')
+        self.select_scatter_att_2 = ttk.Combobox(self.show_scatter_frame,
+                                                 width=20, state='readonly')
         self.select_scatter_att_2['values'] = ['Subscribers', 'Video views', 'Uploaded videos',
                                                'Average monthly earnings']
         self.select_scatter_att_2.pack(side=tk.LEFT, padx=5)
@@ -165,8 +184,10 @@ class YouTubeView(tk.Tk):
                                          font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
         self.select_pie_label.pack(side=tk.LEFT, padx=15, pady=15)
         self.select_pie_att = ttk.Combobox(self.show_pie_frame, width=20, state='readonly')
-        self.select_pie_att['values'] = ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014',
-                                         '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022']
+        self.select_pie_att['values'] = ['2005', '2006', '2007', '2008', '2009', '2010',
+                                         '2011', '2012', '2013', '2014',
+                                         '2015', '2016', '2017', '2018', '2019',
+                                         '2020', '2021', '2022']
         self.select_pie_att.pack(side=tk.LEFT, padx=5)
 
     def bar_selected(self):
@@ -175,7 +196,8 @@ class YouTubeView(tk.Tk):
                                           font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
         self.select_bar_label.pack(side=tk.LEFT, padx=15, pady=15)
         self.select_bar_att = ttk.Combobox(self.show_bar_frame, width=20, state='readonly')
-        self.select_bar_att['values'] = ['Subscribers', 'Video views', 'Uploaded videos', 'Average monthly earnings']
+        self.select_bar_att['values'] = ['Subscribers', 'Video views',
+                                         'Uploaded videos', 'Average monthly earnings']
         self.select_bar_att.pack(side=tk.LEFT, padx=5)
         self.select_bar_label_2 = tk.Label(self.show_bar_frame, text='for each category',
                                            font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
@@ -235,9 +257,11 @@ class YouTubeView(tk.Tk):
 
     def create_suggest_page(self):
         self.suggest_frame = Frame(self.show_menu, bg='#f8f6f2')
-        self.suggest_label = tk.Label(self.suggest_frame, text="This menu will suggest a YouTube channel in a category "
+        self.suggest_label = tk.Label(self.suggest_frame, text="This menu will suggest a YouTube"
+                                                               " channel in a category "
                                                                "you're"
-                                                               " interested in, \nso you can explore how those "
+                                                               " interested in, \nso you can "
+                                                               "explore how those "
                                                                "YouTubers "
                                                                "engage their audience effectively.",
                                       font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
@@ -247,17 +271,23 @@ class YouTubeView(tk.Tk):
         self.select_suggest_label = tk.Label(self.suggest_select_frame, text='Select category',
                                           font=('BM Jua', 22), fg='#f1e8d7', bg='#cd3c3c')
         self.select_suggest_label.pack(side=tk.LEFT, anchor='w', padx=15)
-        self.select_suggest_att = ttk.Combobox(self.suggest_select_frame, state='readonly', width=30)
+        self.select_suggest_att = ttk.Combobox(self.suggest_select_frame,
+                                               state='readonly', width=30)
         unique_category = self.controller.get_unique_category()
-        not_use = ['Education', 'Sports', 'People & Blogs', 'Shows', 'Other', 'Movies', 'Pets & Animals',
-                   'Autos & Vehicles', 'Travel & Events', 'Nonprofits & Activism', 'Trailers']
-        self.select_suggest_att['values'] = [category for category in unique_category if category not in not_use]
+        not_use = ['Education', 'Sports', 'People & Blogs', 'Shows',
+                   'Other', 'Movies', 'Pets & Animals',
+                   'Autos & Vehicles', 'Travel & Events',
+                   'Nonprofits & Activism', 'Trailers']
+        self.select_suggest_att['values'] = [category for category in
+                                             unique_category if category not in not_use]
         self.select_suggest_att.pack(side=tk.LEFT, anchor='w', padx=5)
         self.select_suggest_from = Frame(self.suggest_frame, bg='#f8f6f2')
-        self.from_sub = tk.Button(self.select_suggest_from, text='Top 10 by Subscribers', font=('BM Jua', 22),
+        self.from_sub = tk.Button(self.select_suggest_from,
+                                  text='Top 10 by Subscribers', font=('BM Jua', 22),
                                   fg='#cd3c3c', width=25)
         self.from_sub.pack(side=tk.LEFT, anchor='w', padx=15, fill=tk.X, expand=True)
-        self.from_view = tk.Button(self.select_suggest_from, text='Top 10 by Video views', font=('BM Jua', 22),
+        self.from_view = tk.Button(self.select_suggest_from,
+                                   text='Top 10 by Video views', font=('BM Jua', 22),
                                    fg='#cd3c3c', width=25)
         self.from_view.pack(side=tk.LEFT, anchor='w', padx=15, fill=tk.X, expand=True)
         self.select_suggest_from.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=20)
@@ -296,15 +326,20 @@ class YouTubeView(tk.Tk):
         min_val = summary_stats.loc['min'].to_list()
         max_val = summary_stats.loc['max'].to_list()
         attribute = ['Subscribers', 'Video views', 'Uploaded videos', 'Average monthly earnings']
-        header1 = tk.Label(self.table_frame, text="Attribute", padx=10, pady=5, borderwidth=1, relief="solid",
+        header1 = tk.Label(self.table_frame, text="Attribute", padx=10,
+                           pady=5, borderwidth=1, relief="solid",
                            width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
-        header2 = tk.Label(self.table_frame, text="Mean", padx=10, pady=5, borderwidth=1, relief="solid",
+        header2 = tk.Label(self.table_frame, text="Mean", padx=10,
+                           pady=5, borderwidth=1, relief="solid",
                            width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
-        header3 = tk.Label(self.table_frame, text="Std", padx=10, pady=5, borderwidth=1, relief="solid",
+        header3 = tk.Label(self.table_frame, text="Std", padx=10,
+                           pady=5, borderwidth=1, relief="solid",
                            width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
-        header4 = tk.Label(self.table_frame, text="Min", padx=10, pady=5, borderwidth=1, relief="solid",
+        header4 = tk.Label(self.table_frame, text="Min", padx=10,
+                           pady=5, borderwidth=1, relief="solid",
                            width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
-        header5 = tk.Label(self.table_frame, text="Max", padx=10, pady=5, borderwidth=1, relief="solid",
+        header5 = tk.Label(self.table_frame, text="Max", padx=10,
+                           pady=5, borderwidth=1, relief="solid",
                            width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
 
         header1.grid(row=0, column=0)
@@ -314,23 +349,28 @@ class YouTubeView(tk.Tk):
         header5.grid(row=0, column=4)
 
         for i, attr in enumerate(attribute):
-            label_attr = tk.Label(self.table_frame, text=attr, padx=10, pady=5, borderwidth=1,
+            label_attr = tk.Label(self.table_frame, text=attr,
+                                  padx=10, pady=5, borderwidth=1,
                                   width=15, height=2, font=('BM Jua', 18))
             label_attr.grid(row=i + 1, column=0)
 
-            label_mean = tk.Label(self.table_frame, text=f"{mean[i]:.4f}", padx=10, pady=5, borderwidth=1,
+            label_mean = tk.Label(self.table_frame, text=f"{mean[i]:.4f}",
+                                  padx=10, pady=5, borderwidth=1,
                                   width=15, height=2, font=('BM Jua', 18))
             label_mean.grid(row=i + 1, column=1)
 
-            label_std = tk.Label(self.table_frame, text=f"{std[i]:.4f}", padx=10, pady=5, borderwidth=1,
+            label_std = tk.Label(self.table_frame, text=f"{std[i]:.4f}",
+                                 padx=10, pady=5, borderwidth=1,
                                  width=15, height=2, font=('BM Jua', 18))
             label_std.grid(row=i + 1, column=2)
 
-            label_min = tk.Label(self.table_frame, text=f"{min_val[i]:.4f}", padx=10, pady=5, borderwidth=1,
+            label_min = tk.Label(self.table_frame, text=f"{min_val[i]:.4f}",
+                                 padx=10, pady=5, borderwidth=1,
                                  width=15, height=2, font=('BM Jua', 18))
             label_min.grid(row=i + 1, column=3)
 
-            label_max = tk.Label(self.table_frame, text=f"{max_val[i]:.4f}", padx=10, pady=5, borderwidth=1,
+            label_max = tk.Label(self.table_frame, text=f"{max_val[i]:.4f}",
+                                 padx=10, pady=5, borderwidth=1,
                                  width=15, height=2, font=('BM Jua', 18))
             label_max.grid(row=i + 1, column=4)
 

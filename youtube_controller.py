@@ -1,6 +1,6 @@
+import tkinter as tk
 from youtube_view import YouTubeView
 from data_manage import StoryTelling
-import tkinter as tk
 
 
 class YouTubeController:
@@ -128,22 +128,22 @@ class YouTubeController:
         attribute_1 = self.view.select_scatter_att_1.get()
         if attribute_1 == 'Subscribers':
             return 'subscribers'
-        elif attribute_1 == 'Video views':
+        if attribute_1 == 'Video views':
             return 'video views'
-        elif attribute_1 == 'Uploaded videos':
+        if attribute_1 == 'Uploaded videos':
             return 'uploads'
-        elif attribute_1 == 'Average monthly earnings':
+        if attribute_1 == 'Average monthly earnings':
             return 'average_monthly_earnings'
 
     def handle_scatter_att_2(self):
         attribute_2 = self.view.select_scatter_att_2.get()
         if attribute_2 == 'Subscribers':
             return 'subscribers'
-        elif attribute_2 == 'Video views':
+        if attribute_2 == 'Video views':
             return 'video views'
-        elif attribute_2 == 'Uploaded videos':
+        if attribute_2 == 'Uploaded videos':
             return 'uploads'
-        elif attribute_2 == 'Average monthly earnings':
+        if attribute_2 == 'Average monthly earnings':
             return 'average_monthly_earnings'
 
     def handle_create_scatter(self, event):
@@ -177,5 +177,4 @@ class YouTubeController:
 
     def run(self):
         self.view.mainloop()
-
 
