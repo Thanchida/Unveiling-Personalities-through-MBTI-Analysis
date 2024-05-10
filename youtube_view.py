@@ -196,6 +196,7 @@ class YouTubeView(tk.Tk):
         self.select_hist_label.pack(side=tk.LEFT, padx=15, pady=15)
         self.select_hist_att = ttk.Combobox(self.show_hist_frame, state='readonly', width=30)
         self.select_hist_att['values'] = ['Subscribers', 'Video views', 'Average monthly earnings']
+        self.select_hist_att.current(newindex=0)
         self.select_hist_att.pack(side=tk.LEFT, padx=5)
 
     def scatter_selected(self):
@@ -212,11 +213,13 @@ class YouTubeView(tk.Tk):
                                                  width=20, state='readonly')
         self.select_scatter_att_1['values'] = ['Subscribers', 'Video views', 'Uploaded videos',
                                                'Average monthly earnings']
+        self.select_scatter_att_1.current(newindex=0)
         self.select_scatter_att_1.pack(side=tk.LEFT, padx=5)
         self.select_scatter_att_2 = ttk.Combobox(self.show_scatter_frame,
                                                  width=20, state='readonly')
         self.select_scatter_att_2['values'] = ['Subscribers', 'Video views', 'Uploaded videos',
                                                'Average monthly earnings']
+        self.select_scatter_att_2.current(newindex=0)
         self.select_scatter_att_2.pack(side=tk.LEFT, padx=5)
 
     def pie_selected(self):
@@ -233,6 +236,7 @@ class YouTubeView(tk.Tk):
                                          '2011', '2012', '2013', '2014',
                                          '2015', '2016', '2017', '2018', '2019',
                                          '2020', '2021', '2022']
+        self.select_pie_att.current(newindex=0)
         self.select_pie_att.pack(side=tk.LEFT, padx=5)
 
     def bar_selected(self):
@@ -247,6 +251,7 @@ class YouTubeView(tk.Tk):
         self.select_bar_att = ttk.Combobox(self.show_bar_frame, width=20, state='readonly')
         self.select_bar_att['values'] = ['Subscribers', 'Video views',
                                          'Uploaded videos', 'Average monthly earnings']
+        self.select_bar_att.current(newindex=0)
         self.select_bar_att.pack(side=tk.LEFT, padx=5)
         self.select_bar_label_2 = tk.Label(self.show_bar_frame, text='for each category',
                                            font=('BM Jua', 22), fg='#cd3c3c', bg='#f1e8d7')
@@ -359,6 +364,7 @@ class YouTubeView(tk.Tk):
                    'Nonprofits & Activism', 'Trailers']
         self.select_suggest_att['values'] = [category for category in
                                              unique_category if category not in not_use]
+        self.select_suggest_att.current(newindex=0)
         self.select_suggest_att.pack(side=tk.LEFT, anchor='w', padx=5)
         self.select_suggest_from = Frame(self.suggest_frame, bg='#f8f6f2')
         self.from_sub = tk.Button(self.select_suggest_from,
