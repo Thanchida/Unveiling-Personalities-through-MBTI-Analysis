@@ -418,19 +418,24 @@ class YouTubeView(tk.Tk):
         attribute = ['Subscribers', 'Video views', 'Uploaded videos', 'Average monthly earnings']
         header1 = tk.Label(self.table_frame, text="Attribute", padx=10,
                            pady=5, borderwidth=1, relief="solid",
-                           width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
+                           width=15, height=2, font=('BM Jua', 20),
+                           bg='#f1e8d7', fg='#cd3c3c')
         header2 = tk.Label(self.table_frame, text="Mean", padx=10,
                            pady=5, borderwidth=1, relief="solid",
-                           width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
+                           width=15, height=2, font=('BM Jua', 20),
+                           bg='#f1e8d7', fg='#cd3c3c')
         header3 = tk.Label(self.table_frame, text="Std", padx=10,
                            pady=5, borderwidth=1, relief="solid",
-                           width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
+                           width=15, height=2, font=('BM Jua', 20),
+                           bg='#f1e8d7', fg='#cd3c3c')
         header4 = tk.Label(self.table_frame, text="Min", padx=10,
                            pady=5, borderwidth=1, relief="solid",
-                           width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
+                           width=15, height=2, font=('BM Jua', 20),
+                           bg='#f1e8d7', fg='#cd3c3c')
         header5 = tk.Label(self.table_frame, text="Max", padx=10,
                            pady=5, borderwidth=1, relief="solid",
-                           width=15, height=2, font=('BM Jua', 20), bg='#f1e8d7')
+                           width=15, height=2, font=('BM Jua', 20),
+                           bg='#f1e8d7', fg='#cd3c3c')
 
         header1.grid(row=0, column=0)
         header2.grid(row=0, column=1)
@@ -441,27 +446,32 @@ class YouTubeView(tk.Tk):
         for i, attr in enumerate(attribute):
             label_attr = tk.Label(self.table_frame, text=attr,
                                   padx=10, pady=5, borderwidth=1,
-                                  width=15, height=2, font=('BM Jua', 18))
+                                  width=15, height=2, font=('BM Jua', 18),
+                                  fg='#3d251e')
             label_attr.grid(row=i + 1, column=0)
 
             label_mean = tk.Label(self.table_frame, text=f"{mean[i]:.4f}",
                                   padx=10, pady=5, borderwidth=1,
-                                  width=15, height=2, font=('BM Jua', 18))
+                                  width=15, height=2, font=('BM Jua', 18),
+                                  fg='#3d251e')
             label_mean.grid(row=i + 1, column=1)
 
             label_std = tk.Label(self.table_frame, text=f"{std[i]:.4f}",
                                  padx=10, pady=5, borderwidth=1,
-                                 width=15, height=2, font=('BM Jua', 18))
+                                 width=15, height=2, font=('BM Jua', 18),
+                                 fg='#3d251e')
             label_std.grid(row=i + 1, column=2)
 
             label_min = tk.Label(self.table_frame, text=f"{min_val[i]:.4f}",
                                  padx=10, pady=5, borderwidth=1,
-                                 width=15, height=2, font=('BM Jua', 18))
+                                 width=15, height=2, font=('BM Jua', 18),
+                                 fg='#3d251e')
             label_min.grid(row=i + 1, column=3)
 
             label_max = tk.Label(self.table_frame, text=f"{max_val[i]:.4f}",
                                  padx=10, pady=5, borderwidth=1,
-                                 width=15, height=2, font=('BM Jua', 18))
+                                 width=15, height=2, font=('BM Jua', 18),
+                                 fg='#3d251e')
             label_max.grid(row=i + 1, column=4)
 
     def show_table(self):
