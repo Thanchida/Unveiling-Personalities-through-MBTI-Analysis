@@ -4,18 +4,39 @@ Embark on your YouTube journey with our toolkit featuring three menus: Storytell
 Data for creativity, and YouTuber Suggestions for mentorship, guiding you towards success in 
 the dynamic world of online content creation.
 
-## **How to compile and run**
-- ### **main.py (main program)**
-- ### **Files Needed to Run the Main Program**
-    - Global YouTube Statistics.csv (dataset)
-    - youtube_view.py
-    - data_manage.py
-    - youtube_controller.py
-    - home_icon.png
-    - histogram_icon.png
-    - bar_icon.png
-    - pie_icon.png
-    - scatter_icon.png
+## **Installation**
+1. Clone the repository.
+   ```
+   git clone https://github.com/Thanchida/YouTube-Trend-Analysis-Project.git
+   ```
+2. Navigate to the project directory
+   ```
+   cd YouTube-Trend-Analysis-Project
+   ```
+3. Install the requirements package
+   ```
+   pip install -r requirements.txt
+   ```
+
+## **How to run**
+1. Create a virtual environment.
+   ```
+   python3 -m venv env
+   ```
+2. Activate the virtual environment.
+   * On MS Window use
+   ```
+   .\env\Scripts\activate
+   ```
+   * On macOS and Linux use
+   ```
+   . env/bin/activate
+   ```
+3. Run the program
+   ```
+   python3 main.py
+   ```
+
 
 ## **Project Proposal**
 - [Proposal](https://docs.google.com/document/d/1UOE4kj8l7lmBmyUoykvETM2VaKEsLTY7KaX6PdkP_nc/edit?usp=sharing)
