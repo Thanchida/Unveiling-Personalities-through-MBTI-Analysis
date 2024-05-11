@@ -1,4 +1,7 @@
 # YouTube Trend Analysis
+My project provides users with tools to suggest which types of YouTube channels tend to earn higher or lower 
+engagement and revenue, aiding individuals interested in starting their own channels.
+
 ## **Description**
 Embark on your YouTube journey with our toolkit featuring three menus: Storytelling for insights, Explore 
 Data for creativity, and YouTuber Suggestions for mentorship, guiding you towards success in 
@@ -37,8 +40,7 @@ the dynamic world of online content creation.
    python3 main.py
    ```
 
-
-## **Project Proposal**
-- [Proposal](https://docs.google.com/document/d/1UOE4kj8l7lmBmyUoykvETM2VaKEsLTY7KaX6PdkP_nc/edit?usp=sharing)
+## **Project Document**
+- [Project Proposal](https://docs.google.com/document/d/1UOE4kj8l7lmBmyUoykvETM2VaKEsLTY7KaX6PdkP_nc/edit?usp=sharing)
 
 
