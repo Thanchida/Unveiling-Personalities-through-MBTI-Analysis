@@ -42,5 +42,6 @@ the dynamic world of online content creation.
 
 ## **Project Document**
 - [Project Proposal](https://docs.google.com/document/d/1UOE4kj8l7lmBmyUoykvETM2VaKEsLTY7KaX6PdkP_nc/edit?usp=sharing)
+- [Project Wiki](https://github.com/Thanchida/YouTube-Trend-Analysis-Project/wiki)
 - [Data Source](https://www.kaggle.com/datasets/nelgiriyewithana/global-youtube-statistics-2023)
 
