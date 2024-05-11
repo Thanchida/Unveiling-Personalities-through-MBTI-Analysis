@@ -16,17 +16,11 @@ the dynamic world of online content creation.
    ```
    cd YouTube-Trend-Analysis-Project
    ```
-3. Install the requirements package
-   ```
-   pip install -r requirements.txt
-   ```
-
-## **How to run**
-1. Create a virtual environment.
+3. Create a virtual environment.
    ```
    python3 -m venv env
    ```
-2. Activate the virtual environment.
+4. Activate the virtual environment.
    * On MS Window use
    ```
    .\env\Scripts\activate
@@ -35,12 +29,18 @@ the dynamic world of online content creation.
    ```
    . env/bin/activate
    ```
-3. Run the program
+5. Install the requirements package
+   ```
+   pip install -r requirements.txt
+   ```
+
+## **How to run**
+* Run the program
    ```
    python3 main.py
    ```
 
 ## **Project Document**
 - [Project Proposal](https://docs.google.com/document/d/1UOE4kj8l7lmBmyUoykvETM2VaKEsLTY7KaX6PdkP_nc/edit?usp=sharing)
-
+- [Data Source](https://www.kaggle.com/datasets/nelgiriyewithana/global-youtube-statistics-2023)
 
