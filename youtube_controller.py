@@ -71,7 +71,6 @@ class YouTubeController:
         self.view.table_frame.pack_forget()
         self.view.show_story_page()
         self.story.default_story_graph()
-        # self.story.first_story(event=None)
 
     def create_and_default(self, num):
         """
